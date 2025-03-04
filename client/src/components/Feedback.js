@@ -27,8 +27,9 @@ const Feedback = () => {
         window.open('https://www.google.com/search?q=yosemite+burrito+reviews&sca_esv=71fa22d63362fc25&rlz=1C5CHFA_enUS1064US1064&biw=1512&bih=794&sxsrf=AHTn8zoomy2vTobziF2IjOBru1waSeoOVA%3A1741107217692&ei=ETDHZ8nyKc-r5NoPy5awyAk&ved=0ahUKEwiJv-fp8fCLAxXPFVkFHUsLDJkQ4dUDCBA&uact=5&oq=yosemite+burrito+reviews&gs_lp=Egxnd3Mtd2l6LXNlcnAiGHlvc2VtaXRlIGJ1cnJpdG8gcmV2aWV3czIKECMYgAQYJxiKBTIGEAAYFhgeMgIQJjILEAAYgAQYhgMYigUyCxAAGIAEGIYDGIoFMgsQABiABBiGAxiKBTILEAAYgAQYhgMYigUyCBAAGIAEGKIEMggQABiABBiiBDIFEAAY7wVIumFQqgVYhmFwCngBkAEAmAF-oAHfEaoBBDI2LjK4AQPIAQD4AQGYAiagApUTqAISwgIKEAAYsAMY1gQYR8ICDRAAGLADGNYEGEcYyQPCAg4QABiABBiwAxiSAxiKBcICBxAjGCcY6gLCAhQQABiABBiRAhi0AhiKBRjqAtgBAcICFBAAGIAEGOMEGLQCGOkEGOoC2AEBwgIdEC4YgAQYkQIY0QMYtAIYxwEYyAMYigUY6gLYAQHCAhcQLhiABBiRAhi0AhjIAxiKBRjqAtgBAcICHRAuGIAEGNEDGOMEGLQCGMcBGMgDGOkEGOoC2AEBwgIEECMYJ8ICExAuGIAEGMcBGCcYigUYjgUYrwHCAhcQLhiABBiRAhixAxjRAxiDARjHARiKBcICCxAuGIAEGLEDGIMBwgIQEC4YgAQYQxjHARiKBRivAcICChAAGIAEGEMYigXCAhEQLhiABBixAxjRAxiDARjHAcICCxAuGIAEGNEDGMcBwgIREC4YgAQYxwEYmAUYmgUYrwHCAgoQABiABBgUGIcCwgIWEC4YgAQYFBiHAhjHARiYBRiaBRivAcICCBAuGIAEGOUEwgIFECEYoAHCAgcQIxiwAhgnwgIQEC4YgAQYxwEYDRiOBRivAcICBxAAGIAEGA3CAgYQABgNGB7CAg4QLhiABBjHARiOBRivAcICCBAAGKIEGIkFmAMI8QUomuOi0fxX8ogGAZAGCboGBggBEAEYAZIHBDMzLjWgB8qzAw&sclient=gws-wiz-serp#lrd=0x89c6c32b39864fa3:0xb452bb81619ce59b,3,,,,', '_blank');
       }
       
-      // Still send the feedback to the server
-      const response = await axios.post('http://localhost:5001/api/feedback', {
+      // Replace hardcoded URLs with environment variable
+      const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:5001';
+      const response = await axios.post(`${SERVER_URL}/api/feedback`, {
         rating: selectedRating,
         feedbackId
       });

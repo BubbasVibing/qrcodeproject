@@ -21,9 +21,10 @@ if (process.env.NODE_ENV === 'production') {
 // Generate QR code
 app.get('/api/generate-qr', async (req, res) => {
   try {
-    const baseUrl = process.env.NODE_ENV === 'production' 
-      ? 'https://your-production-domain.com' 
-      : 'http://localhost:3000';
+    const baseUrl = process.env.CLIENT_URL || 
+      (process.env.NODE_ENV === 'production' 
+        ? 'https://your-production-domain.com' 
+        : 'http://localhost:3000');
     
     // Generate a unique ID for this feedback session
     const feedbackId = Date.now().toString();

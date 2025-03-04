@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Home.css';
 
+const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:5001';
+
 const Home = () => {
   const [qrCode, setQrCode] = useState('');
   const [feedbackUrl, setFeedbackUrl] = useState('');
@@ -13,7 +15,7 @@ const Home = () => {
       setLoading(true);
       setError('');
       
-      const response = await axios.get('http://localhost:5001/api/generate-qr');
+      const response = await axios.get(`${SERVER_URL}/api/generate-qr`);
       
       if (response.data.success) {
         setQrCode(response.data.qrCode);
