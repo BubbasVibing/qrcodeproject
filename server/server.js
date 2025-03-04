@@ -25,9 +25,10 @@ if (process.env.NODE_ENV === 'production') {
 // Generate QR code
 app.get('/api/generate-qr', async (req, res) => {
   try {
+    // Use the actual deployment URL, not a placeholder
     const baseUrl = process.env.CLIENT_URL || 
       (process.env.NODE_ENV === 'production' 
-        ? 'https://your-production-domain.com' 
+        ? 'https://qrcodeproject.onrender.com' // Replace with your actual Render URL
         : 'http://localhost:3000');
     
     // Generate a unique ID for this feedback session
