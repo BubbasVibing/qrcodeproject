@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Home.css';
 
-const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:5001';
+const SERVER_URL = process.env.NODE_ENV === 'production' 
+  ? window.location.origin  // Use the same domain in production
+  : 'http://localhost:5001'; // Use localhost in development
 
 const Home = () => {
   const [qrCode, setQrCode] = useState('');

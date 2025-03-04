@@ -7,7 +7,11 @@ const app = express();
 let PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.CLIENT_URL || true  // Allow the client URL or any origin in production
+    : 'http://localhost:3000'  // Allow localhost:3000 in development
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
