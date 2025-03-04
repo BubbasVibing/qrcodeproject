@@ -37,6 +37,8 @@ app.get('/api/generate-qr', async (req, res) => {
     // Create the feedback URL
     const feedbackUrl = `${baseUrl}/feedback/${feedbackId}`;
     
+    console.log("Generated feedback URL:", feedbackUrl);
+    
     // Generate QR code as data URL
     const qrCodeDataUrl = await QRCode.toDataURL(feedbackUrl);
     
@@ -82,6 +84,24 @@ app.post('/api/feedback', (req, res) => {
   } catch (error) {
     console.error('Error processing feedback:', error);
     res.status(500).json({ success: false, message: 'Failed to process feedback' });
+  }
+});
+
+// Add this temporary debugging code
+app.get('/debug-build', (req, res) => {
+  const fs = require('fs');
+  try {
+    const buildPath = path.join(__dirname, '../client/build');
+    const files = fs.readdirSync(buildPath);
+    const indexHtml = fs.existsSync(path.join(buildPath, 'index.html'));
+    
+    res.json({
+      buildPathExists: fs.existsSync(buildPath),
+      files,
+      indexHtmlExists: indexHtml
+    });
+  } catch (error) {
+    res.json({ error: error.message });
   }
 });
 
