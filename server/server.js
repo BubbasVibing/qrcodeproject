@@ -86,11 +86,8 @@ app.post('/api/feedback', (req, res) => {
 // Specific route for feedback
 app.get('/feedback/:feedbackId', (req, res) => {
   console.log(`Feedback route hit with ID: ${req.params.feedbackId}`);
-  // Try sending a simple response first to see if the route works
-  res.send(`Feedback page for ID: ${req.params.feedbackId}`);
-  
-  // Comment out the index.html serving for now
-  // res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
+  // Now serve the React app instead of the simple text response
+  res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
 });
 
 // Catch-all route to serve React app

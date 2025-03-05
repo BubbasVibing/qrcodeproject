@@ -15,6 +15,8 @@ const Feedback = () => {
   const [submitted, setSubmitted] = useState(false);
   
   const { feedbackId } = useParams();
+  
+  console.log("Feedback component loaded with ID:", feedbackId);
 
   const handleRatingHover = (hoveredValue) => {
     setHoveredRating(hoveredValue);
