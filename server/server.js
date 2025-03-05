@@ -24,8 +24,8 @@ app.get('/api/hello', (req, res) => {
 // Generate QR code
 app.get('/api/generate-qr', async (req, res) => {
   try {
-    // Use the actual deployment URL
-    const baseUrl = process.env.CLIENT_URL || 'https://qrcodeproject.onrender.com';
+    // Use the correct domain
+    const baseUrl = 'https://qrcodeproject-6jr0.onrender.com';
     
     // Generate a unique ID for this feedback session
     const feedbackId = Date.now().toString();
