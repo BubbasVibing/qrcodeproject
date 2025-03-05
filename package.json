@@ -9,11 +9,12 @@
     "install-all": "npm install && npm run client-install && npm run server-install",
     "client-build": "cd client && npm run build",
     "server": "cd server && node server.js",
-    "start": "node simple-server.js",
+    "start": "node server/server.js",
     "heroku-postbuild": "npm run client-install && npm run client-build",
     "dev": "concurrently \"npm run server\" \"cd client && npm start\""
   },
   "dependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "express": "^4.21.2"
   }
-} 
+}
