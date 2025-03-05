@@ -4,7 +4,8 @@ const path = require('path');
 const cors = require('cors');
 
 const app = express();
-let PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
+console.log(`Using PORT: ${PORT}`);
 
 // Middleware
 app.use(cors({
@@ -27,6 +28,23 @@ console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 const indexPath = path.join(__dirname, '../client/build/index.html');
 console.log(`Index path: ${indexPath}`);
 console.log(`Index file exists: ${require('fs').existsSync(indexPath)}`);
+
+// Add a root route at the very beginning
+app.get('/', (req, res) => {
+  console.log('Root route hit');
+  res.send('Server is running! Try /hello or /api/test');
+});
+
+// Add these test routes at the very beginning
+app.get('/hello', (req, res) => {
+  console.log('Hello route hit');
+  res.send('Hello from the server!');
+});
+
+app.get('/api/test', (req, res) => {
+  console.log('API test route hit');
+  res.json({ message: 'API is working' });
+});
 
 // API Routes
 
@@ -134,15 +152,19 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const startServer = () => {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  // Always try to use the PORT provided by Render first
+  const serverPort = process.env.PORT || PORT;
+  
+  app.listen(serverPort, '0.0.0.0', () => {
+    console.log(`Server running on port ${serverPort}`);
+    console.log(`Full server address: http://0.0.0.0:${serverPort}`);
   }).on('error', (err) => {
     if (err.code === 'EADDRINUSE') {
-      console.log(`Port ${PORT} is busy, trying port ${PORT + 1}`);
-      PORT += 1;
+      console.error(`Port ${serverPort} is busy, trying port ${parseInt(serverPort) + 1}`);
+      process.env.PORT = parseInt(serverPort) + 1;
       startServer();
     } else {
-      console.error(err);
+      console.error('Server error:', err);
     }
   });
 };
