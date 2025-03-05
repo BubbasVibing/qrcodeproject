@@ -19,6 +19,9 @@ const Home = () => {
       
       const response = await axios.get(`${SERVER_URL}/api/generate-qr`);
       
+      // Debug the response
+      console.log("Server response:", response.data);
+      
       if (response.data.success) {
         setQrCode(response.data.qrCode);
         setFeedbackUrl(response.data.feedbackUrl);

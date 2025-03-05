@@ -20,16 +20,24 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
 
+// Add at the beginning of your file, after the imports
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+
+// Add after your imports
+const indexPath = path.join(__dirname, '../client/build/index.html');
+console.log(`Index path: ${indexPath}`);
+console.log(`Index file exists: ${require('fs').existsSync(indexPath)}`);
+
 // API Routes
 
 // Generate QR code
 app.get('/api/generate-qr', async (req, res) => {
   try {
-    // Use the actual deployment URL, not a placeholder
-    const baseUrl = process.env.CLIENT_URL || 
-      (process.env.NODE_ENV === 'production' 
-        ? 'https://qrcodeproject.onrender.com' // Replace with your actual Render URL
-        : 'http://localhost:3000');
+    // IMPORTANT: Update this with your actual Render app URL
+    const actualRenderUrl = 'https://qrcodeproject.onrender.com'; // Replace with your exact URL
+    
+    // Use the hardcoded URL for now
+    const baseUrl = actualRenderUrl;
     
     // Generate a unique ID for this feedback session
     const feedbackId = Date.now().toString();
@@ -105,9 +113,22 @@ app.get('/debug-build', (req, res) => {
   }
 });
 
+// Test route for feedback
+app.get('/feedback/:feedbackId', (req, res) => {
+  console.log(`Feedback route hit with ID: ${req.params.feedbackId}`);
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
+// Add before your catch-all route
+app.get('/test-route', (req, res) => {
+  res.send('Test route works!');
+});
+
+// Modify your catch-all route
 // Catch-all handler for client-side routing in production
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
+    console.log(`Catch-all route hit: ${req.url}`);
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
   });
 }
