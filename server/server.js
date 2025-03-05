@@ -13,6 +13,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Serve static files from React app
+app.use(express.static(path.join(__dirname, '../client/build')));
+
 // Simple test routes
 app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello from the server!' });
@@ -80,8 +83,15 @@ app.post('/api/feedback', (req, res) => {
   }
 });
 
-// Serve static files from React app
-app.use(express.static(path.join(__dirname, '../client/build')));
+// Specific route for feedback
+app.get('/feedback/:feedbackId', (req, res) => {
+  console.log(`Feedback route hit with ID: ${req.params.feedbackId}`);
+  // Try sending a simple response first to see if the route works
+  res.send(`Feedback page for ID: ${req.params.feedbackId}`);
+  
+  // Comment out the index.html serving for now
+  // res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
+});
 
 // Catch-all route to serve React app
 app.get('*', (req, res) => {

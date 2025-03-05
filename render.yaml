@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: qrcodeproject
+    env: node
+    buildCommand: npm run install-all && npm run client-build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CLIENT_URL
+        value: https://qrcodeproject.onrender.com 
